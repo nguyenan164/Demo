@@ -156,6 +156,152 @@ void playerAttack( int &x, int &y)
 			turn = false;
 }
 
+void setBoard()
+{
+	for (int i = 0; i < col; i++)
+	{
+		for (int j = 0; j < row; j++)
+		{
+			PlayerBoard[i][j] = '*';
+			ComBoard[i][j] = '*';
+			Comboard[i][j] = '*';
+		}
+	}
+}
+
+void showBoard()
+{
+	system("CLS") ;
+	cout << "   Computer Board" << endl << "  ";
+	for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << ComBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	cout << "    Player Board" << endl << "  ";
+
+		for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << PlayerBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+	
+	showinfo();
+}
+
+void showBoard2(int a, int b, int c, int d)
+{
+	system("CLS");
+	cout << "   Computer Board" << endl << "  ";
+	for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << ComBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	cout << "    Player Board" << endl << "  ";
+
+		for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << PlayerBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+	char * playerPoint;
+	char * comPoint;
+	playerPoint = convert2(a, b);
+
+	cout << "You've attacked the point "<< playerPoint[0] << playerPoint[1] <<  endl;
+	comPoint = convert2(c, d);
+	cout << "The enemy've attacked the point "<< comPoint[0] << comPoint[1] <<  endl;
+
+	showinfo();
+
+}
+
+char * convert2( int x, int  y)
+{
+	char *ch =new char[10];
+	if (x == 0) ch[0] = 'A';
+	else if (x == 1) ch[0] = 'B';
+	else if (x == 2) ch[0] = 'C';
+	else if (x == 3) ch[0] = 'D';
+	else if (x == 4) ch[0] = 'E';
+	else if (x == 5) ch[0] = 'F';
+	else if (x == 6) ch[0] = 'G';
+	else if (x == 7) ch[0] = 'H';
+	else if (x == 8) ch[0] = 'I';
+	else if (x == 9) ch[0] = 'K';
+
+	if (y == 0) ch[1] = '1';
+	else if (y == 1) ch[1] = '2';
+	else if (y == 2) ch[1] = '3';
+	else if (y == 3) ch[1] = '4';
+	else if (y == 4) ch[1] = '5';
+	else if (y == 5) ch[1] = '6';
+	else if (y == 6) ch[1] = '7';
+	else if (y == 7) ch[1] = '8';
+	else if (y == 8) ch[1] = '9';
+	else if (y == 9)
+	{
+		ch[1] == '1';
+		ch[2] == '0';
+	}
+	
+	if (y != 9)
+	    ch[2] == '\0';
+	return ch;
+
+}
+void gotoxy(int x, int y)
+{
+  static HANDLE h = NULL;
+  if(!h)
+    h = GetStdHandle(STD_OUTPUT_HANDLE);
+  COORD c = { x, y };
+  SetConsoleCursorPosition(h,c);
+}
+
 void comAttack(int &x, int &y)
 {
 	turn = true;
