@@ -259,6 +259,137 @@ void showBoard2(int a, int b, int c, int d)
 
 }
 
+void setPlayerShip(char & choice)
+{
+	
+	char ch[4];
+	int x1 = 0;
+	int x2 = 0;
+	int y1 = 0; 
+	int y2 = 0;
+	maxShip = 4;
+	cout << "Enter the number of ships, maximum " << maxShip << " ship: ";
+	cin >> maxShip;
+	while (!cin || maxShip > 4 || maxShip < 1)
+    {
+    	gotoxy(0, 29);
+    	cout << "                                                          ";
+    	gotoxy(0, 29);
+        cout << "Out of range, please enter again: " ;
+        cin.clear();
+        while (cin.get() != '\n')
+            continue;
+        cin >> maxShip;
+    }
+	cout << "Enter the position of your ship, you must enter " << maxShip << " times, q to quit" <<  endl;
+	cout << "Each ship has the size 2x4, ex a1b4" << endl;
+	for (int i = 0; i < maxShip; i++)
+	{
+		gotoxy(0, 31 + i);
+		cout << "Ship " << i + 1 << ": " ;
+		cin.clear();
+		cin >> ch;
+
+		Convert(ch, x1, y1, x2, y2);
+
+
+		while (checkCondition(x1, y1, x2, y2) == false)
+		{
+		choice = ch[0];
+		if ((choice == 'q' || choice == 'Q') && ch[1] == '\0')
+			{
+				showmenu2(choice);
+				return;
+			}
+			cin.clear();
+			while (cin.get() != '\n')
+				continue;
+			gotoxy(0, 31 + i);
+			cout << "                                        ";
+			
+			gotoxy(0, 31 + i);
+			cout << "Set another places:  " << "ship " << i + 1 << ": ";
+			cin.clear();
+			cin >> ch;
+			Convert(ch, x1, y1, x2, y2);
+
+
+		}
+		while (checkLastShipPoint2(x1, y1, x2, y2) == false)
+		{
+			gotoxy(0, 31 + i);
+			cout << "                                        ";
+			gotoxy(0, 31 + i);
+			cout << "Set another places:  " << "ship " << i + 1 << ": ";
+			cin.clear();
+			cin >> ch;
+			Convert(ch, x1, y1, x2, y2);
+			cout << endl;
+		}
+
+		int a1 = x1 > x2 ? x2 : x1;
+		int a2 = x1 > x2 ? x1 : x2;
+		int b1 = y1 > y2 ? y2 : y1;
+		int b2 = y1 > y2 ? y1 : y2;
+	
+		
+		
+		for (int i = b1 ; i <= b2; i++)
+		{
+			for(int j = a1; j <= a2; j++)
+			{
+				PlayerBoard[i][j] = 'S';
+				gotoxy(j +j + 2, i + 15);
+				cout << 'S'; 
+			}
+		}
+		
+	}
+	
+}
+
+void setLastShipPoint(int &x1, int &y1, int &x2, int &y2)
+{
+//	srand(time(NULL));	
+	x2 = -1;
+	y2 = -1;
+	int direct;
+	while (x2 < 0 || x2 > col - 1 || y2 < 0 || y2 > row - 1 )
+	{
+		direct = rand() % 8;
+		switch(direct)
+		{
+			case 0: x2 = x1 + 3;
+					y2 = y1 + 1;
+					break;
+			case 1: x2 = x1 + 3;
+					y2 = y1 - 1;
+					break;
+			case 2: x2 = x1 + 1;
+					y2 = y1 - 3;
+					break;
+			case 3: x2 = x1 - 1;
+					y2 = y1 - 3;
+					break;
+			case 4: x2 = x1 - 3;
+					y2 = y1 - 1;
+					break;
+			case 5: x2 = x1 - 3;
+					y2 = y1 + 1;
+					break;
+			case 6: x2 = x1 - 1;
+					y2 = y1 + 3;
+					break;
+			case 7: x2 = x1 + 1;
+					y2 = y1 + 3;
+					break;
+		}
+		
+	}
+	
+}
+
+
 char * convert2( int x, int  y)
 {
 	char *ch =new char[10];
@@ -542,7 +673,55 @@ void reset()
 		}
 	}
 }
+bool checkLastShipPoint(int x1, int y1, int x2, int y2)
+{
+	int a1 = x1 > x2 ? x2 : x1;
+	int a2 = x1 > x2 ? x1 : x2;
+	int b1 = y1 > y2 ? y2 : y1;
+	int b2 = y1 > y2 ? y1 : y2;
+		
+	for (int i = b1; i <= b2; i++)
+	{
+		for (int j = a1; j <= a2; j++)
+		{
+			if (Comboard[i][j] == 'S') 
+				return false;
+			else 
+				continue;
+		}
+	}
+	
+	return true;
+}
 
+bool checkLastShipPoint2(int x1, int y1, int x2, int y2)
+{
+	int a1 = x1 > x2 ? x2 : x1;
+	int a2 = x1 > x2 ? x1 : x2;
+	int b1 = y1 > y2 ? y2 : y1;
+	int b2 = y1 > y2 ? y1 : y2;
+		
+	for (int i = b1; i <= b2; i++)
+	{
+		for (int j = a1; j <= a2; j++)
+		{
+			if (PlayerBoard[i][j] == 'S') 
+				return false;
+			else 
+				continue;
+		}
+	}
+	
+	return true;
+}
+
+bool checkCondition(int x1, int y1, int x2, int y2)
+{
+	if (x1 < 0 || x1 > row || y1 < 0 || y1 > col || x2 < 0 || x2 > row || y2 < 0 || y2 > col || myAbs((x2 - x1) * (y2 - y1)) != 3)
+		return false;
+	else 
+		return true;
+}
 void checkchoice(char choice[])
 {
 	while (strlen(choice) != 1)
