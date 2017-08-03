@@ -1,0 +1,141 @@
+	Game Rule: 
+
+void gameRule(char & ch)
+{
+	system("CLS");
+	cout << "Battleship : The Game " << endl;
+	cout << "~~ Game Rule ~~" << endl;
+	cout << "You as a commander is trying to flat out the enemy front line with you ships crew, consist of various ship formations " << endl;
+	cout << "(4 ships at a time maximum) with up to 2x4 blocks per ship, in a battleground of 9*9 blocks wide." << endl;
+	cout << "Arrange your ship at unexpected locations, note in mind that the enemy has the same ship types as yours." << endl;
+	cout << "Fire by input the location as you desire in an exciting turn-based system." << endl;
+	cout << "q to back to the menu \n" << endl;
+	cin >> choice;
+	checkchoice(choice);
+	
+	while (choice[0] != 'q' && choice[0] != 'Q')
+	{
+		switch (choice[0])
+		{
+			
+			
+			case 'Q':
+			case 'q': 
+				return;
+			default: cout << "Thats is not a choice, please enter again" << endl;
+		}
+		cin >> choice;
+		checkchoice(choice);
+	}
+
+	
+}
+
+	Set Board
+
+void setBoard()
+{
+	for (int i = 0; i < col; i++)
+	{
+		for (int j = 0; j < row; j++)
+		{
+			PlayerBoard[i][j] = '*';
+			ComBoard[i][j] = '*';
+			Comboard[i][j] = '*';
+		}
+	}
+}
+
+	Show Board
+
+void showBoard()
+{
+	system("CLS") ;
+	cout << "   Computer Board" << endl << "  ";
+	for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << ComBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	cout << "    Player Board" << endl << "  ";
+
+		for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << PlayerBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+	
+	showinfo();
+}
+
+Show Board 2
+
+void showBoard2(int a, int b, int c, int d)
+{
+	system("CLS");
+	cout << "   Computer Board" << endl << "  ";
+	for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << ComBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << endl << endl;
+
+	cout << "    Player Board" << endl << "  ";
+
+		for (int i = 0; i < col; i++)
+	{
+		cout << i + 1 << " " ;
+	}
+	cout << endl;
+	for (int i = 0; i < col;  i++)
+	{
+		cout << convert(i) << " ";
+		for (int j = 0; j < row; j++)
+		{
+			cout << PlayerBoard[i][j] << " ";
+		}
+		cout << endl;
+	}
+	char * playerPoint;
+	char * comPoint;
+	playerPoint = convert2(a, b);
+
+	cout << "You've attacked the point "<< playerPoint[0] << playerPoint[1] <<  endl;
+	comPoint = convert2(c, d);
+	cout << "The enemy've attacked the point "<< comPoint[0] << comPoint[1] <<  endl;
+
+	showinfo();
+
+}
